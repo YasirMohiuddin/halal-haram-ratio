@@ -173,13 +173,27 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
         windowWidth: 1080,
         windowHeight: 1920,
       });
-      const url = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `halal-haram-ratio-${ratio}pct.png`;
-      link.click();
+
+      const blob = await new Promise<Blob>((resolve) =>
+        canvas.toBlob((b) => resolve(b!), "image/png")
+      );
+      const filename = `halal-haram-ratio-${ratio}pct.png`;
+      const file = new File([blob], filename, { type: "image/png" });
+
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file] });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
     } catch (err) {
-      console.error("Share failed:", err);
+      if (err instanceof Error && err.name !== "AbortError") {
+        console.error("Share failed:", err);
+      }
     } finally {
       setSharing(false);
     }
@@ -382,6 +396,16 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
               >
                 Retake the quiz 🔄
               </motion.button>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.4 }}
+                className="mt-4 text-xs font-medium"
+                style={{ color: "rgba(107,107,138,0.45)", letterSpacing: "0.05em" }}
+              >
+                halalharamratio.com
+              </motion.p>
             </motion.div>
           </motion.div>
         )}

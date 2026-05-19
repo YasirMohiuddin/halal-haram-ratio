@@ -69,6 +69,20 @@ export const QUESTIONS: Question[] = [
         { emoji: "📱", text: "Phone is out, just checking quickly", score: 1 },
         { emoji: "🤳", text: "On Instagram, the khutbah is just too long today", score: 0 },
       ],
+      path4: [
+        { emoji: "✅", text: "Already knew this place was certified halal", score: 4 },
+        { emoji: "🥗", text: "Got the chips and salad, just to be safe", score: 3 },
+        { emoji: "📱", text: "Googled the shop beforehand, seems halal enough", score: 2 },
+        { emoji: "🍗", text: "Got the chicken wrap, didn't really ask if it's halal", score: 1 },
+        { emoji: "🌯", text: "Ordered the doner, didn't ask any questions", score: 0 },
+      ],
+      path5: [
+        { emoji: "✅", text: "Cooked something at home, completely halal, no debate", score: 4 },
+        { emoji: "🥗", text: "Kept it vegetarian, couldn't be bothered to think about it", score: 3 },
+        { emoji: "📱", text: "Googled the delivery place first, seems halal enough", score: 2 },
+        { emoji: "🍗", text: "Ordered delivery, didn't really think about whether it was halal", score: 1 },
+        { emoji: "🌯", text: "Found an old takeaway in the back. Ate it. No questions asked.", score: 0 },
+      ],
     },
   },
   {
@@ -109,7 +123,7 @@ export const QUESTIONS: Question[] = [
       path2: "Someone pulls out a vape in the living room.",
       path3: "Your cousin's friend pulls out a vape.",
       path4: "Someone pulls out a vape.",
-      path5: "You're on the balcony. Someone offers you something.",
+      path5: "Someone dropped by later. They pull out a vape.",
     },
     options: [
       { emoji: "🚬", text: "Already had my own, been smoking all night", score: 0 },
@@ -139,6 +153,15 @@ export const QUESTIONS: Question[] = [
       { emoji: "👀", text: "Flirted a little but kept it halal, whatever that means", score: 2 },
       { emoji: "😅", text: "Talked to them, gave the number, what's the harm", score: 1 },
     ],
+    pathOptions: {
+      path5: [
+        { emoji: "💍", text: "Already married or engaged, left them on read immediately", score: 4 },
+        { emoji: "👻", text: "Left it on read, not even going there", score: 4 },
+        { emoji: "🤝", text: "Replied, kept the conversation friendly and respectful", score: 3 },
+        { emoji: "👀", text: "Flirted a little over text, just seeing what's going on", score: 2 },
+        { emoji: "😅", text: "Replied immediately, gave the energy back, what's the harm", score: 1 },
+      ],
+    },
   },
   {
     id: 6,
@@ -167,6 +190,13 @@ export const QUESTIONS: Question[] = [
         { emoji: "😬", text: "Let it ring, sent a voice note saying you're fine", score: 2 },
         { emoji: "📞", text: "Picked up and told her exactly where you are", score: 4 },
         { emoji: "🤲", text: "Already called her earlier, you're not an animal", score: 4 },
+      ],
+      path5: [
+        { emoji: "📵", text: "Declined, not in the mood to talk tonight", score: 0 },
+        { emoji: "😅", text: "Picked up, she asked why you're home on a Friday. Didn't have a good answer.", score: 2 },
+        { emoji: "📞", text: "Picked up, told her you're just having a quiet one", score: 4 },
+        { emoji: "🗣️", text: "Picked up and ended up chatting for an hour", score: 4 },
+        { emoji: "🤲", text: "You called her first, genuinely had nothing better to do", score: 4 },
       ],
     },
   },
@@ -289,9 +319,10 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 12,
-    questionText: "Ramadan started today. Like, today today. What happens now?",
+    questionText: "Eid al-Adha is next week. Qurbani situation?",
     pathQuestionText: {
       path3: "They ask for your advice. What do you do?",
+      path5: "Ramadan started today. Like, today today. What happens now?",
     },
     setupLines: {
       path1: "Hold on.",

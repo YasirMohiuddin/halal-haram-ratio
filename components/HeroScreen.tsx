@@ -85,7 +85,8 @@ export default function HeroScreen({ onStart }: HeroScreenProps) {
       // Alternate sides so toasts hug the edges and don't fully block content
       const onLeft = id % 2 === 0;
       const x = onLeft ? 3 + Math.random() * 18 : 79 + Math.random() * 18; // 3–21% or 79–97%
-      const y = 8 + Math.random() * 72;  // 8–80% vertically
+      // Avoid the center band (30–65%) where the main title and button live
+      const y = Math.random() < 0.5 ? 5 + Math.random() * 20 : 68 + Math.random() * 22; // top 5–25% or bottom 68–90%
       setToasts((prev) => [...prev, { id, ...notif, x, y }].slice(-4));
       setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 5000);
     };
@@ -185,7 +186,7 @@ export default function HeroScreen({ onStart }: HeroScreenProps) {
                     boxShadow: "0 0 40px rgba(212,168,67,0.25), 0 4px 20px rgba(0,0,0,0.4)",
                   }}
                 >
-                  Calculate yours ✨
+                  Calculate yours  📌
                 </motion.button>
               </motion.div>
 
@@ -193,9 +194,9 @@ export default function HeroScreen({ onStart }: HeroScreenProps) {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45, duration: 0.55, ease }}
-                className="mt-5 text-sm font-light text-text-muted"
+                className="mt-5 text-sm font-semibold text-text-muted"
               >
-                Takes 2 minutes. No judgment kinda.
+                Takes 2 minutes. No judgment... kinda.
               </motion.p>
             </motion.div>
           )}

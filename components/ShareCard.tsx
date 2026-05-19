@@ -9,6 +9,9 @@ interface ShareCardProps {
 }
 
 const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype }, ref) => {
+  const numColor =
+    ratio > 65 ? "#22c55e" : ratio < 35 ? "#ef4444" : "#d4a843";
+
   return (
     <div
       ref={ref}
@@ -22,166 +25,151 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
         fontFamily: '"SF Pro Rounded", ui-rounded, system-ui, sans-serif',
         overflow: "hidden",
-        padding: "80px",
+        padding: "120px 80px 100px",
+        boxSizing: "border-box",
       }}
     >
+      {/* Background glows */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 20%, rgba(212,168,67,0.14) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(180,110,15,0.09) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 55% at 50% 15%, rgba(212,168,67,0.13) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 80% 85%, rgba(180,110,15,0.08) 0%, transparent 60%)",
           pointerEvents: "none",
         }}
       />
 
+      {/* Border frame */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
+          inset: "40px",
           border: "2px solid rgba(212,168,67,0.1)",
-          margin: "40px",
           borderRadius: "48px",
           pointerEvents: "none",
         }}
       />
 
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "80px",
-            marginBottom: "48px",
-            lineHeight: 1,
-          }}
-        >
-          ☪️
-        </div>
-
+      {/* Top: label */}
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ fontSize: "96px", lineHeight: 1, marginBottom: "40px" }}>☪️</div>
         <p
           style={{
-            fontSize: "32px",
+            fontSize: "34px",
             fontWeight: 500,
-            color: "rgba(174,174,194,0.8)",
-            letterSpacing: "0.25em",
+            color: "rgba(174,174,194,0.7)",
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
-            marginBottom: "16px",
-            margin: "0 0 16px 0",
+            margin: 0,
           }}
         >
           My Halal Haram Ratio
         </p>
+      </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            gap: "8px",
-            marginBottom: "8px",
-          }}
-        >
+      {/* Middle: big number */}
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
           <span
             style={{
-              fontSize: "240px",
+              fontSize: "320px",
               fontWeight: 900,
               lineHeight: 1,
-              background: "linear-gradient(135deg, #22c55e 0%, #d4a843 60%, #d4a843 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              letterSpacing: "-8px",
+              letterSpacing: "-12px",
+              color: numColor,
             }}
           >
             {ratio}
           </span>
           <span
             style={{
-              fontSize: "100px",
+              fontSize: "120px",
               fontWeight: 900,
-              color: "rgba(107,107,138,0.6)",
-              paddingBottom: "32px",
+              color: "rgba(107,107,138,0.5)",
+              paddingBottom: "40px",
             }}
           >
             %
           </span>
         </div>
-
         <p
           style={{
-            fontSize: "28px",
+            fontSize: "30px",
             fontWeight: 400,
-            color: "rgba(107,107,138,0.7)",
-            marginBottom: "80px",
-            margin: "0 0 80px 0",
+            color: "rgba(107,107,138,0.6)",
+            margin: "8px 0 0",
+            letterSpacing: "0.08em",
           }}
         >
           halal
         </p>
+      </div>
 
-        <div
+      {/* Archetype card */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          width: "100%",
+          padding: "52px 72px",
+          background: "rgba(255,255,255,0.045)",
+          border: "1.5px solid rgba(255,255,255,0.09)",
+          borderRadius: "36px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        <p style={{ fontSize: "88px", lineHeight: 1, margin: "0 0 24px" }}>{archetype.emoji}</p>
+        <p
           style={{
-            padding: "40px 64px",
-            background: "rgba(255,255,255,0.04)",
-            border: "1.5px solid rgba(255,255,255,0.08)",
-            borderRadius: "32px",
-            marginBottom: "40px",
+            fontSize: "60px",
+            fontWeight: 800,
+            color: "#f2f2f7",
+            lineHeight: 1.15,
+            margin: "0 0 20px",
           }}
         >
-          <p
-            style={{
-              fontSize: "80px",
-              lineHeight: 1,
-              marginBottom: "20px",
-              margin: "0 0 20px 0",
-            }}
-          >
-            {archetype.emoji}
-          </p>
-          <p
-            style={{
-              fontSize: "56px",
-              fontWeight: 800,
-              color: "#f2f2f7",
-              lineHeight: 1.2,
-              margin: "0 0 20px 0",
-            }}
-          >
-            {archetype.name}
-          </p>
-          <p
-            style={{
-              fontSize: "32px",
-              fontWeight: 400,
-              color: "rgba(174,174,194,0.7)",
-              lineHeight: 1.5,
-              margin: 0,
-              maxWidth: "800px",
-            }}
-          >
-            {archetype.shareTagline}
-          </p>
-        </div>
+          {archetype.name}
+        </p>
+        <p
+          style={{
+            fontSize: "34px",
+            fontWeight: 400,
+            color: "rgba(174,174,194,0.65)",
+            lineHeight: 1.5,
+            margin: 0,
+          }}
+        >
+          {archetype.shareTagline}
+        </p>
+      </div>
 
+      {/* Bottom: spectrum bar + URL */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "48px",
+        }}
+      >
         <div
           style={{
-            width: "800px",
-            height: "16px",
-            background: "rgba(255,255,255,0.06)",
+            width: "100%",
+            height: "14px",
+            background: "rgba(255,255,255,0.07)",
             borderRadius: "999px",
             overflow: "hidden",
-            marginBottom: "200px",
           }}
         >
           <div
@@ -196,12 +184,11 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
 
         <p
           style={{
-            position: "absolute",
-            bottom: "-680px",
             fontSize: "28px",
             fontWeight: 500,
-            color: "rgba(107,107,138,0.5)",
-            letterSpacing: "0.05em",
+            color: "rgba(107,107,138,0.45)",
+            letterSpacing: "0.06em",
+            margin: 0,
           }}
         >
           halalharamratio.com

@@ -79,15 +79,29 @@ function getVariants(type: AnimationType): Variants {
   return map[type];
 }
 
-const answerContainerVariants: Variants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.09,
-      delayChildren: 1.05,
-    },
-  },
-};
+const QUESTION_WORD_DELAY_START = 0.25;
+const SENTENCE_BREAK_EXTRA = 0.45;
+
+function gapAfterWord(word: string): number {
+  const clean = word.replace(/[^a-zA-Z]/g, "");
+  const base = 0.06 + clean.length * 0.028;
+  if (/[.?!]$/.test(word)) return base + SENTENCE_BREAK_EXTRA;
+  if (/[,;:]$/.test(word)) return base + 0.15;
+  return base;
+}
+
+function getWordDelay(words: string[], index: number): number {
+  let delay = QUESTION_WORD_DELAY_START;
+  for (let i = 0; i < index; i++) {
+    delay += gapAfterWord(words[i]);
+  }
+  return delay;
+}
+
+function getAnswersDelay(words: string[]): number {
+  const lastWordDelay = getWordDelay(words, words.length - 1);
+  return lastWordDelay + 0.5 + 0.25; // last word duration + buffer
+}
 
 const answerItemVariants: Variants = {
   hidden: { opacity: 0, y: 14 },
@@ -116,6 +130,8 @@ export default function QuestionScreen({
   const variants = getVariants(animType);
 
   const progressPercent = (questionIndex / totalQuestions) * 100;
+  const questionWords = combinedQuestion.split(" ");
+  const answersDelay = getAnswersDelay(questionWords);
 
   useEffect(() => {
     setSelected(null);
@@ -181,23 +197,24 @@ export default function QuestionScreen({
           exit="exit"
         >
           <div className="flex-1 flex flex-col justify-center gap-7 py-4">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.25,
-                duration: 0.5,
-                ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-              }}
-              className="text-[1.6rem] font-black text-text leading-snug text-center"
-            >
-              {combinedQuestion}
-            </motion.h2>
+            <h2 className="text-[1.6rem] font-black text-text leading-snug text-center">
+              {questionWords.map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: getWordDelay(questionWords, i), duration: 0.5 }}
+                  className="inline"
+                >
+                  {word}{" "}
+                </motion.span>
+              ))}
+            </h2>
 
-            {/* Answers - stagger in well after the question settles */}
+            {/* Answers - stagger in after question finishes */}
             <motion.div
               className="flex flex-col gap-3"
-              variants={answerContainerVariants}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: answersDelay } } }}
               initial="hidden"
               animate="show"
             >
