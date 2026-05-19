@@ -841,11 +841,11 @@ export function getMirrorContent(
     if (instaWild && q12Missed && dmIdx >= 3)
       return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. And ${rE} for Eid al-Adha.`, subtext: "Three revelations at once." };
     if (instaIdx === 3 && q12Missed)
-      return { label: "the feed check", headline: `Modest public page, different private story. And ${rE} — not quite ready for Eid al-Adha.`, subtext: "The public doesn't know the half of it." };
+      return { label: "the feed check", headline: `Modest public page, different private story. And ${rE}, not quite ready for Eid al-Adha.`, subtext: "The public doesn't know the half of it." };
     if (q12Idx === 4)
       return { label: "the feed check", headline: `Didn't realise Eid al-Adha was next week. ${iE} on the grid.`, subtext: "The preparation was minimal." };
     if (instaIdx === 0 && q12Missed)
-      return { label: "the feed check", headline: `Quran verses on the grid. But ${rE} — not quite ready for Eid al-Adha.`, subtext: "The grid and the schedule are not aligned." };
+      return { label: "the feed check", headline: `Quran verses on the grid. But ${rE}, not quite ready for Eid al-Adha.`, subtext: "The grid and the schedule are not aligned." };
     if (!q12Missed && dmIdx >= 3)
       return { label: "the feed check", headline: `${dE} in the DMs. Eid al-Adha is next week though.`, subtext: "The reset begins now." };
     return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. ${rE} about Eid al-Adha.`, subtext: "The full picture is emerging." };
