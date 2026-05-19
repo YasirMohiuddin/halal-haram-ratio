@@ -199,10 +199,20 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
     }
   };
 
-  const handleShareX = () => {
-    const text = `Every Muslim has a Halal Haram Ratio. Mine is ${ratio}%, ${archetype.name}. Find out yours at halalharamratio.com`;
-    const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  const handleShareFriend = async () => {
+    const text = `Every Muslim has a Halal Haram Ratio. Mine is ${ratio}%, ${archetype.name}. Find out yours.`;
+    const url = `https://halalharamratio.com`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ text, url });
+      } catch (err) {
+        if (err instanceof Error && err.name !== "AbortError") {
+          await navigator.clipboard.writeText(`${text} ${url}`);
+        }
+      }
+    } else {
+      await navigator.clipboard.writeText(`${text} ${url}`);
+    }
   };
 
   const RatioNumber = ({ value }: { value: number }) => (
@@ -334,9 +344,9 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                   border: "1.5px solid rgba(255,255,255,0.08)",
                 }}
               >
-                <div className="flex items-center justify-center gap-3 mb-3">
+                <div className="flex flex-col items-center gap-2 mb-3">
                   <span className="text-4xl">{archetype.emoji}</span>
-                  <h2 className="text-xl font-black text-text leading-tight">{archetype.name}</h2>
+                  <h2 className="text-xl font-black text-text leading-tight text-center">{archetype.name}</h2>
                 </div>
                 <p className="text-sm font-semibold text-text-secondary leading-relaxed text-center">
                   {archetype.description}
@@ -368,7 +378,7 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                 </motion.button>
 
                 <motion.button
-                  onClick={handleShareX}
+                  onClick={handleShareFriend}
                   whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.1 }}
                   className="w-full py-4 rounded-full font-bold text-base cursor-pointer select-none flex items-center justify-center gap-2"
@@ -378,10 +388,8 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                     color: "#f2f2f7",
                   }}
                 >
-                  <span style={{ fontFamily: "serif", fontWeight: 900, fontSize: "18px", lineHeight: 1 }}>
-                    𝕏
-                  </span>
-                  <span>Share to X</span>
+                  <span>💬</span>
+                  <span>Send to a friend</span>
                 </motion.button>
               </motion.div>
 

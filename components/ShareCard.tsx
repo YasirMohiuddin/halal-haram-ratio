@@ -66,7 +66,7 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
           alignItems: "center",
         }}
       >
-        <div style={{ fontSize: "100px", lineHeight: 1, marginBottom: "40px" }}>🎭</div>
+        <div style={{ fontSize: "100px", lineHeight: 1, marginBottom: "40px" }}>🕌</div>
         <p
           style={{
             fontSize: "34px",
@@ -75,6 +75,7 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             margin: 0,
+            paddingTop: "20px",
           }}
         >
           My Halal Haram Ratio
@@ -98,7 +99,7 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
             display: "flex",
             alignItems: "flex-end",
             gap: "16px",
-            marginBottom: "64px",
+            marginBottom: "180px",
           }}
         >
           <span
@@ -136,9 +137,10 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
                 color: "rgba(107,107,138,0.45)",
                 lineHeight: 1.2,
                 letterSpacing: "0.02em",
+                paddingTop: "10px",
               }}
             >
-              Halal
+              halal
             </span>
           </div>
         </div>
@@ -190,10 +192,13 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
           position: "relative",
           zIndex: 1,
           width: "100%",
-          padding: "64px 72px",
+          paddingTop: "40px",
+          paddingBottom: "80px",
+          paddingLeft: "72px",
+          paddingRight: "72px",
           background: "rgba(255,255,255,0.045)",
           border: "1.5px solid rgba(255,255,255,0.09)",
-          borderRadius: "36px",
+          borderRadius: "48px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -201,7 +206,7 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
           boxSizing: "border-box",
         }}
       >
-        <p style={{ fontSize: "88px", lineHeight: 1, margin: "0 0 24px" }}>
+        <p style={{ fontSize: "88px", lineHeight: 1, margin: "0 0 40px" }}>
           {archetype.emoji}
         </p>
         <p
@@ -210,7 +215,8 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
             fontWeight: 800,
             color: "#f2f2f7",
             lineHeight: 1.15,
-            margin: "0 0 20px",
+            margin: "0 0 32px",
+            textAlign: "center",
           }}
         >
           {archetype.name}
@@ -222,6 +228,7 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
             color: "rgba(174,174,194,0.65)",
             lineHeight: 1.5,
             margin: 0,
+            textAlign: "center",
           }}
         >
           {archetype.shareTagline}
@@ -234,9 +241,10 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
           style={{
             fontSize: "52px",
             fontWeight: 700,
-            color: "rgba(107,107,138,0.55)",
+            color: "rgba(174,174,194,0.8)",
             letterSpacing: "0.04em",
             margin: 0,
+            paddingBottom: "40px",
           }}
         >
           halalharamratio.com
