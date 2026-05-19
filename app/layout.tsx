@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Halal Haram Ratio",
   description: "Every Muslim has a Halal Haram Ratio. Find out yours.",
-  openGraph: {
+openGraph: {
     title: "Halal Haram Ratio",
     description: "Every Muslim has a Halal Haram Ratio. Find out yours.",
   },
