@@ -338,7 +338,7 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                   <span className="text-4xl">{archetype.emoji}</span>
                   <h2 className="text-xl font-black text-text leading-tight">{archetype.name}</h2>
                 </div>
-                <p className="text-sm font-normal text-text-secondary leading-relaxed text-center">
+                <p className="text-sm font-semibold text-text-secondary leading-relaxed text-center">
                   {archetype.description}
                 </p>
               </motion.div>

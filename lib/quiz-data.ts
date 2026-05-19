@@ -322,7 +322,6 @@ export const QUESTIONS: Question[] = [
     questionText: "Eid al-Adha is next week. Qurbani situation?",
     pathQuestionText: {
       path3: "They ask for your advice. What do you do?",
-      path5: "Ramadan started today. Like, today today. What happens now?",
     },
     setupLines: {
       path1: "Hold on.",
@@ -333,11 +332,11 @@ export const QUESTIONS: Question[] = [
     },
     doubleWeight: true,
     options: [
-      { emoji: "🌙", text: "Already knew, been mentally prepared for weeks", score: 8 },
-      { emoji: "😇", text: "Perfect timing honestly, needed this reset", score: 6 },
-      { emoji: "😅", text: "Completely forgot, scrambling to make niyyah right now", score: 3 },
-      { emoji: "🤷", text: "Will try to fast, no promises beyond that", score: 2 },
-      { emoji: "🍕", text: "Already ate this morning so technically tomorrow is day one for me", score: 1 },
+      { emoji: "🐑", text: "Sorted for weeks, we don't play about Eid al-Adha", score: 8 },
+      { emoji: "😇", text: "Got it organised this week, alhamdulillah", score: 6 },
+      { emoji: "🤝", text: "Going in on the family qurbani, it counts", score: 4 },
+      { emoji: "🤷", text: "Not doing qurbani this year if I'm honest", score: 2 },
+      { emoji: "🙈", text: "Wait, Eid al-Adha is next week?", score: 1 },
     ],
     pathOptions: {
       path3: [
@@ -356,11 +355,11 @@ export const QUESTIONS: Question[] = [
       path3: "You...",
     },
     setupLines: {
-      path1: "It's day three of Ramadan. You're driving.",
-      path2: "It's day three of Ramadan. You're driving.",
+      path1: "It's the Day of Arafah. You're driving.",
+      path2: "It's the Day of Arafah. You're driving.",
       path3: "The conversation turns to someone who isn't there. It gets a little personal.",
-      path4: "It's day three of Ramadan. You're driving.",
-      path5: "It's day three of Ramadan. You're driving.",
+      path4: "It's the Day of Arafah. You're driving.",
+      path5: "It's the Day of Arafah. You're driving.",
     },
     options: [
       { emoji: "🎵", text: "Turned it up, you know every word", score: 0 },
@@ -386,14 +385,14 @@ export const QUESTIONS: Question[] = [
       path3: "You...",
     },
     setupLines: {
-      path1: "It's the last ten days of Ramadan.",
-      path2: "It's the last ten days of Ramadan.",
+      path1: "Eid al-Adha is days away.",
+      path2: "Eid al-Adha is days away.",
       path3: "Your cousin says check your phone. Someone dropped a charity link in the group chat.",
-      path4: "It's the last ten days of Ramadan.",
-      path5: "It's the last ten days of Ramadan.",
+      path4: "Eid al-Adha is days away.",
+      path5: "Eid al-Adha is days away.",
     },
     options: [
-      { emoji: "💸", text: "Donated a good amount, Laylatul Qadr is not to be played with", score: 4 },
+      { emoji: "💸", text: "Sorted qurbani and gave sadaqah on top, Dhul Hijjah doesn't mess around", score: 4 },
       { emoji: "🤲", text: "Made dua for everyone, does that count", score: 2 },
       { emoji: "📱", text: "Shared a charity link on your story, that counts right", score: 1 },
       { emoji: "😅", text: "Meant to donate, kept forgetting", score: 1 },
@@ -413,18 +412,18 @@ export const QUESTIONS: Question[] = [
     id: 15,
     questionText: "You're feeling...",
     setupLines: {
-      path1: "Ramadan is over. Eid is here.",
-      path2: "Ramadan is over. Eid is here.",
+      path1: "Eid al-Adha is here.",
+      path2: "Eid al-Adha is here.",
       path3: "You're home. Friday is done.",
-      path4: "Ramadan is over. Eid is here.",
-      path5: "Ramadan is over. Eid is here.",
+      path4: "Eid al-Adha is here.",
+      path5: "Eid al-Adha is here.",
     },
     options: [
       { emoji: "😇", text: "Spiritually recharged, different person", score: 4 },
       { emoji: "😅", text: "Glad I tried, could have done better honestly", score: 3 },
       { emoji: "🙏", text: "Ready to find out my ratio", score: 2 },
       { emoji: "🎉", text: "Mostly excited about the food and the money", score: 1 },
-      { emoji: "😬", text: "The same as before Ramadan, not gonna lie", score: 0 },
+      { emoji: "😬", text: "The same as before, not gonna lie", score: 0 },
     ],
     pathOptions: {
       path3: [
@@ -658,7 +657,7 @@ export const LOADING_MESSAGES = [
   "Checking your Spotify history... 🎵",
   "Consulting the sheikh... 🕌",
   "Reviewing your private story... 👀",
-  "Analysing your Ramadan performance... 🌙",
+  "Analysing your Eid al-Adha prep... 🐑",
   "Calculating your pepperoni pizza incidents... 🍕",
   "Reviewing your Fajr attendance... ⏰",
   "Cross referencing your family group chat activity... 📱",
@@ -803,7 +802,7 @@ export function getMirrorContent(
       return { label: "the prayer report", headline: "Five prayers. Fajr included. The commitment is showing.", subtext: guiltIdx === 3 ? "And then the dua on top. Thorough." : "The record is very clean." };
     if (fajrIdx <= 1 && prayersIdx === 0) {
       if (guiltIdx <= 1)
-        return { label: "the prayer report", headline: "Fajr came and went. Zero prayers. No guilt about it.", subtext: "We are so back next Ramadan, inshallah." };
+        return { label: "the prayer report", headline: "Fajr came and went. Zero prayers. No guilt about it.", subtext: "Next time, inshallah." };
       return { label: "the prayer report", headline: "Fajr came and went. Zero prayers. Then a dua for forgiveness.", subtext: "Skipping straight to the pardon." };
     }
     if (prayersIdx === 0 && guiltIdx === 3)
@@ -815,41 +814,41 @@ export function getMirrorContent(
     return { label: "the prayer report", headline: `${cap(prayerWord)} prayers today.`, subtext: "The audit continues." };
   }
 
-  // ── Mirror 4: The feed - Instagram (Q10) + DMs (Q11) + Ramadan (Q12) ────
+  // ── Mirror 4: The feed - Instagram (Q10) + DMs (Q11) + Ramadan/Eid (Q12) ────
   if (mirrorIndex === 3) {
     const instaIdx = a(10)?.optionIndex ?? 1;
     const dmIdx = a(11)?.optionIndex ?? 2;
-    const ramadanIdx = a(12)?.optionIndex ?? 2;
+    const q12Idx = a(12)?.optionIndex ?? 2;
     const iE = a(10)?.emoji ?? "📸";
     const dE = a(11)?.emoji ?? "👀";
     const rE = a(12)?.emoji ?? "😅";
 
     if (path === "path3") {
-      if (ramadanIdx === 4)
+      if (q12Idx === 4)
         return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. And the situationship advice was projection.`, subtext: "Classic." };
-      if (instaIdx === 0 && ramadanIdx <= 1)
+      if (instaIdx === 0 && q12Idx <= 1)
         return { label: "the feed check", headline: "Quran verses on the grid. Gave the full Islamic perspective to your cousin.", subtext: "Consistent. We respect it." };
-      if (instaIdx === 3 && ramadanIdx >= 3)
+      if (instaIdx === 3 && q12Idx >= 3)
         return { label: "the feed check", headline: "Modest public page. Gave advice about the situationship that very much applies to you.", subtext: "We see the irony." };
       return { label: "the feed check", headline: `${iE} on the grid. ${rE} with the advice.`, subtext: "A Friday in full." };
     }
 
     const instaWild = instaIdx === 3 || instaIdx === 4;
-    const ramadanMissed = ramadanIdx >= 2;
+    const q12Missed = q12Idx >= 3;
 
-    if (instaIdx === 0 && dmIdx === 0 && !ramadanMissed)
-      return { label: "the feed check", headline: "Quran verses on the grid. DMs closed. Ramadan-ready.", subtext: "We have no notes." };
-    if (instaWild && ramadanMissed && dmIdx >= 3)
-      return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. And ${rE} for Ramadan.`, subtext: "Three revelations at once." };
-    if (instaIdx === 3 && ramadanMissed)
-      return { label: "the feed check", headline: `Modest public page, different private story. And ${rE} caught off guard by Ramadan.`, subtext: "The public doesn't know the half of it." };
-    if (ramadanIdx === 4)
-      return { label: "the feed check", headline: `Already ate this morning so technically tomorrow is day one. ${iE} on the grid.`, subtext: "The technicalities will not hold in court." };
-    if (instaIdx === 0 && ramadanMissed)
-      return { label: "the feed check", headline: `Quran verses on the grid. But ${rE} caught off guard by Ramadan.`, subtext: "The grid and the schedule are not aligned." };
-    if (!ramadanMissed && dmIdx >= 3)
-      return { label: "the feed check", headline: `${dE} in the DMs. Ramadan starts today though.`, subtext: "The reset begins now." };
-    return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. ${rE} about Ramadan.`, subtext: "The full picture is emerging." };
+    if (instaIdx === 0 && dmIdx === 0 && !q12Missed)
+      return { label: "the feed check", headline: "Quran verses on the grid. DMs closed. Eid al-Adha-ready.", subtext: "We have no notes." };
+    if (instaWild && q12Missed && dmIdx >= 3)
+      return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. And ${rE} for Eid al-Adha.`, subtext: "Three revelations at once." };
+    if (instaIdx === 3 && q12Missed)
+      return { label: "the feed check", headline: `Modest public page, different private story. And ${rE} — not quite ready for Eid al-Adha.`, subtext: "The public doesn't know the half of it." };
+    if (q12Idx === 4)
+      return { label: "the feed check", headline: `Didn't realise Eid al-Adha was next week. ${iE} on the grid.`, subtext: "The preparation was minimal." };
+    if (instaIdx === 0 && q12Missed)
+      return { label: "the feed check", headline: `Quran verses on the grid. But ${rE} — not quite ready for Eid al-Adha.`, subtext: "The grid and the schedule are not aligned." };
+    if (!q12Missed && dmIdx >= 3)
+      return { label: "the feed check", headline: `${dE} in the DMs. Eid al-Adha is next week though.`, subtext: "The reset begins now." };
+    return { label: "the feed check", headline: `${iE} on the grid. ${dE} in the DMs. ${rE} about Eid al-Adha.`, subtext: "The full picture is emerging." };
   }
 
   return { label: "checking in", headline: "Still going.", subtext: "The audit continues." };
