@@ -200,18 +200,46 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
   };
 
   const handleShareFriend = async () => {
+    if (sharing || !shareCardRef.current) return;
+    setSharing(true);
     const text = `Every Muslim has a Halal Haram Ratio. Mine is ${ratio}%, ${archetype.name}. Find out yours.`;
-    const url = `https://halalharamratio.com`;
-    if (navigator.share) {
-      try {
+    const url = `https://halalharamratio.live`;
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      const canvas = await html2canvas(shareCardRef.current, {
+        backgroundColor: "#08080f",
+        scale: 1,
+        useCORS: true,
+        allowTaint: true,
+        width: 1080,
+        height: 1920,
+        windowWidth: 1080,
+        windowHeight: 1920,
+      });
+
+      const blob = await new Promise<Blob>((resolve) =>
+        canvas.toBlob((b) => resolve(b!), "image/png")
+      );
+      const filename = `halal-haram-ratio-${ratio}pct.png`;
+      const file = new File([blob], filename, { type: "image/png" });
+
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], text, url });
+      } else if (navigator.share) {
         await navigator.share({ text, url });
-      } catch (err) {
-        if (err instanceof Error && err.name !== "AbortError") {
-          await navigator.clipboard.writeText(`${text} ${url}`);
-        }
+      } else {
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(link.href);
       }
-    } else {
-      await navigator.clipboard.writeText(`${text} ${url}`);
+    } catch (err) {
+      if (err instanceof Error && err.name !== "AbortError") {
+        console.error("Share failed:", err);
+      }
+    } finally {
+      setSharing(false);
     }
   };
 
@@ -412,7 +440,7 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                 className="mt-4 text-xs font-medium"
                 style={{ color: "rgba(107,107,138,0.45)", letterSpacing: "0.05em" }}
               >
-                halalharamratio.com
+                halalharamratio.live
               </motion.p>
             </motion.div>
           </motion.div>

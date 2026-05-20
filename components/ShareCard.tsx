@@ -247,7 +247,7 @@ const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(({ ratio, archetype
             paddingBottom: "40px",
           }}
         >
-          halalharamratio.com
+          halalharamratio.live
         </p>
       </div>
     </div>
