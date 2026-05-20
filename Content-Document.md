@@ -8,6 +8,15 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 
 ---
 
+### Gender Selector (All Paths, No Score)
+
+**Before we start — who are you in this story?**
+
+- The brother holding the group chat together
+- The sister who actually runs things
+
+---
+
 ### Q1 , The Plan (All Paths)
 
 **It's Friday. The group chat is popping off. What's the plan?**
@@ -22,6 +31,13 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 
 ### Path 1: Shisha Spot 🍖
 *Timeline: Friday evening through to 4am*
+
+**OOTD Check (Female Only): Friday fit check. OOTD. What are you actually leaving the house in?**
+- Covered head to toe, that's just the default
+- Hijab on, everything else is up for debate
+- Clean and modest, nothing that draws attention
+- It's what it is, you wore what was comfortable
+- The fit was giving. You weren't exactly hiding.
 
 **Q2: The food situation. What are you actually eating?**
 - 🌭 Ordered the pepperoni pizza... it's fine
@@ -57,6 +73,12 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 - 🤥 Picked up, said you're at a friend's place
 - 😬 Picked up, gave the phone to your most religious looking friend to say salam
 - 🤲 Already home, you don't play these games
+
+**Temptation Question (Male Only): It's past 1am. You're home. In bed. Phone in hand. It's late. You're alone. Porn's on the screen. Be honest, what actually happens?**
+- Full session. You know what you did.
+- Started watching, stopped halfway, told yourself that counts
+- Opened it, closed it, opened it, closed it for real the second time
+- Felt the pull, made istighfar before it started
 
 **Q7: It's 4am. Fajr adhan just went off. You...**
 - 🙈 Didn't even realise, still going strong
@@ -126,6 +148,10 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 *Timeline: Friday evening through to late night*
 *Mostly identical to Path 1. Key setup line differences below.*
 
+**OOTD Check (Female Only):** Same question and options as Path 1 OOTD Check.
+
+**Temptation Question (Male Only):** Same question and options as Path 1 Temptation Question. Setup line: *It's past 1am. You're home. In bed. Phone in hand.*
+
 **Q2:** Someone ordered pizza. The box arrives. You look at it and...
 *(Same answer options as Path 1 Q2)*
 
@@ -141,6 +167,13 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 
 ### Path 3: Jummah then Family Lunch 🕌
 *Timeline: Friday afternoon through evening, no time jumps, no Ramadan*
+
+**OOTD Check (Female Only): Friday fit check. OOTD. What are you actually leaving the house in?**
+- Covered head to toe, that's just the default
+- Hijab on, everything else is up for debate
+- Clean and modest, nothing that draws attention
+- It's what it is, you wore what was comfortable
+- The fit was giving. You weren't exactly hiding.
 
 **Q2: You're at Jummah. The khutbah is going on. Be honest, what are you actually doing?**
 - 🙏 Fully locked in, taking mental notes
@@ -200,6 +233,12 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 - 👀 Single and ready to see where this goes
 - 🙏 Single and not really supposed to be doing this
 
+**Temptation Question (Male Only): It was a good day. You're home now. In bed. Phone out. It's late. You're alone. Porn's on the screen. Be honest, what actually happens?**
+- Full session. You know what you did.
+- Started watching, stopped halfway, told yourself that counts
+- Opened it, closed it, opened it, closed it for real the second time
+- Felt the pull, made istighfar before it started
+
 **Q12: Your cousin starts venting about their situationship. They ask for your advice. You...**
 - 😇 Gave them the full Islamic perspective, nicely
 - 🤝 Listened and supported them without judgment
@@ -234,6 +273,10 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 *Timeline: Friday late night through to Fajr*
 *Most haram setting by default. Key setup line differences below.*
 
+**OOTD Check (Female Only):** Same question and options as Path 1 OOTD Check.
+
+**Temptation Question (Male Only):** Same question and options as Path 1 Temptation Question. Setup line: *It's past 1am. You're home. In bed. Phone in hand.*
+
 **Q2:** You're starving. You find a kebab shop outside. What are you ordering?
 *(Same answer options as Path 1 Q2)*
 
@@ -247,6 +290,13 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 ### Path 5: Staying Home 🛋️
 *Timeline: Friday evening, low key*
 
+**OOTD Check (Female Only): Staying in. Mirror check. What are you actually wearing?**
+- Covered head to toe, that's just the default
+- Hijab on, everything else is up for debate
+- Clean and modest, nothing that draws attention
+- It's what it is, comfort comes first
+- The fit was giving. Even at home.
+
 **Q2:** You're hungry. You open the fridge. What are you actually eating?
 *(Same answer options as Path 1 Q2)*
 
@@ -255,6 +305,12 @@ Each path is triggered by the answer to Q1. Q2 onwards adapts its setup line bas
 
 **Q4:** You're on the balcony. Someone offers you something. You...**
 *(Same answer options as Path 1 Q4)*
+
+**Temptation Question (Male Only): It's a Friday night. You've been home all evening. Bored. Deep in a scroll. It's late. You're alone. Porn's on the screen. Be honest, what actually happens?**
+- Full session. You know what you did.
+- Started watching, stopped halfway, told yourself that counts
+- Opened it, closed it, opened it, closed it for real the second time
+- Felt the pull, made istighfar before it started
 
 **Q5:** Someone you've been talking to texts you out of nowhere. You...
 *(Same answer options as Path 1 Q5)*
@@ -339,10 +395,12 @@ You are the person everyone calls when they need a fatwa at 2am. You have an ans
 
 Each answer carries a halal points value. The final ratio is calculated as:
 
-**Final Ratio = (Total Points / 60) x 100**
+**Final Ratio = (Total Points / 64) x 100**
 
+The Gender Selector carries no score, it is the path personaliser only.
 Q1 carries no score, it is the story selector only.
 Three questions carry double weight, prayers, Fajr/Maghrib moment, and Ramadan commitment, as these carry the most spiritual significance.
+The OOTD Check (female) and Temptation Question (male) are gender-gated — only one appears per user, each worth a max of 4 points.
 
 ---
 
@@ -445,10 +503,17 @@ Three questions carry double weight, prayers, Fajr/Maghrib moment, and Ramadan c
 
 ---
 
+**OOTD Check (Female) / Temptation Question (Male)**
+- Full session / The fit was giving. You weren't exactly hiding. / Even at home. - 0
+- Started watching, stopped halfway / It's what it is - 1
+- Opened it, closed it, opened it, closed it / Clean and modest - 2
+- Felt the pull, made istighfar / Hijab on, everything else up for debate - 3
+- Covered head to toe, that's just the default - 4
+
 **Score Breakdown**
-- 9 normal questions x 4 = 36 points
+- 10 normal questions x 4 = 40 points
 - 3 double weight questions x 8 = 24 points
-- Total maximum = 60 points
+- Total maximum = 64 points
 
 **Archetype Score Ranges**
 - 0-10% - The Cultural Muslim
