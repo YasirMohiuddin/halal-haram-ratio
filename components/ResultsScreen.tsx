@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { track } from "@vercel/analytics";
+import { trackEvent } from "@/lib/analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { Confetti, ConfettiRef } from "@/components/ui/confetti";
 import { Archetype } from "@/lib/quiz-data";
@@ -204,9 +204,9 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
   };
 
   const handleOpenLumo = () => {
-    track("lumo_cta_click", {
+    trackEvent("lumo_cta_click", {
       ratio,
-      archetype: archetype.name,
+      archetype_name: archetype.name,
     });
     window.open(LUMO_APP_STORE_URL, "_blank", "noopener,noreferrer");
   };
