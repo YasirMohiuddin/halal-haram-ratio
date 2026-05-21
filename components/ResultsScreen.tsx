@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { track } from "@vercel/analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { Confetti, ConfettiRef } from "@/components/ui/confetti";
 import { Archetype } from "@/lib/quiz-data";
@@ -15,6 +16,9 @@ interface ResultsScreenProps {
 }
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+const LUMO_APP_STORE_URL =
+  "https://apps.apple.com/hk/app/lumo-a-muslim-friend/id6757131632?l=en-GB";
 
 export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScreenProps) {
   const confettiRef = useRef<ConfettiRef>(null);
@@ -199,55 +203,22 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
     }
   };
 
-  const handleShareFriend = async () => {
-    if (sharing || !shareCardRef.current) return;
-    setSharing(true);
-    const text = `Every Muslim has a Halal Haram Ratio. Mine is ${ratio}%, ${archetype.name}. Find out yours.`;
-    const url = `https://halalharamratio.live`;
-    try {
-      const html2canvas = (await import("html2canvas")).default;
-      const canvas = await html2canvas(shareCardRef.current, {
-        backgroundColor: "#08080f",
-        scale: 1,
-        useCORS: true,
-        allowTaint: true,
-        width: 1080,
-        height: 1920,
-        windowWidth: 1080,
-        windowHeight: 1920,
-      });
-
-      const blob = await new Promise<Blob>((resolve) =>
-        canvas.toBlob((b) => resolve(b!), "image/png")
-      );
-      const filename = `halal-haram-ratio-${ratio}pct.png`;
-      const file = new File([blob], filename, { type: "image/png" });
-
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], text, url });
-      } else if (navigator.share) {
-        await navigator.share({ text, url });
-      } else {
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        link.click();
-        URL.revokeObjectURL(link.href);
-      }
-    } catch (err) {
-      if (err instanceof Error && err.name !== "AbortError") {
-        console.error("Share failed:", err);
-      }
-    } finally {
-      setSharing(false);
-    }
+  const handleOpenLumo = () => {
+    track("lumo_cta_click", {
+      ratio,
+      archetype: archetype.name,
+    });
+    window.open(LUMO_APP_STORE_URL, "_blank", "noopener,noreferrer");
   };
 
   const RatioNumber = ({ value }: { value: number }) => (
-    <div className="flex items-baseline gap-1">
+    <div className="flex items-baseline gap-1 overflow-visible">
       <span
-        className="text-[5.8rem] font-black leading-none tabular-nums"
+        className="inline-block text-[5.8rem] font-black leading-none tabular-nums"
         style={{
+          letterSpacing: "-0.05em",
+          paddingRight: "0.12em",
+          paddingLeft: "0.04em",
           background: `linear-gradient(135deg, ${spectrumColor} 0%, #d4a843 100%)`,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
@@ -313,7 +284,7 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
               initial={{ opacity: 0, y: 220 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, ease }}
-              className="mb-2 flex flex-col items-center w-full"
+              className="mb-2 flex flex-col items-center w-full overflow-visible"
             >
               <motion.p
                 initial={{ opacity: 0 }}
@@ -406,7 +377,7 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                 </motion.button>
 
                 <motion.button
-                  onClick={handleShareFriend}
+                  onClick={handleOpenLumo}
                   whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.1 }}
                   className="w-full py-4 rounded-full font-bold text-base cursor-pointer select-none flex items-center justify-center gap-2"
@@ -416,8 +387,8 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                     color: "#f2f2f7",
                   }}
                 >
-                  <span>💬</span>
-                  <span>Send to a friend</span>
+                  <span>✨</span>
+                  <span>Improve your ratio for free</span>
                 </motion.button>
               </motion.div>
 
