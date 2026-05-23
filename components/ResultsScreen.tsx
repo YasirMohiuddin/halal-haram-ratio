@@ -18,7 +18,7 @@ interface ResultsScreenProps {
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const LUMO_APP_STORE_URL =
-  "https://apps.apple.com/hk/app/lumo-a-muslim-friend/id6757131632?l=en-GB";
+  "https://apps.apple.com/us/app/lumo-a-muslim-friend/id6757131632?ppid=74f7b080-b982-4d13-a220-6b1a0b504b5a";
 
 export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScreenProps) {
   const confettiRef = useRef<ConfettiRef>(null);
