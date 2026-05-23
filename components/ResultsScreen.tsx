@@ -302,6 +302,15 @@ export default function ResultsScreen({
               transition={{ duration: 0.65, ease }}
               className="mb-2 flex flex-col items-center w-full overflow-visible"
             >
+              <motion.span
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.45, ease }}
+                className="text-4xl mb-3 leading-none"
+                aria-hidden
+              >
+                🕌
+              </motion.span>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
