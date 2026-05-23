@@ -6,13 +6,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Confetti, ConfettiRef } from "@/components/ui/confetti";
 import { Archetype } from "@/lib/quiz-data";
 import ShareCard from "@/components/ShareCard";
+import SocialProofBubble from "@/components/SocialProofBubble";
+import { buildSocialProofLine, getSocialProofPercentFromRatio } from "@/lib/social-proof";
 
 type Phase = "gap" | "counting" | "revealing";
 
 interface ResultsScreenProps {
   ratio: number;
   archetype: Archetype;
-  onRetake: () => void;
+  onRetake?: () => void;
+  demo?: boolean;
+  socialProofLine?: string;
 }
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -20,7 +24,13 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const LUMO_APP_STORE_URL =
   "https://apps.apple.com/us/app/lumo-a-muslim-friend/id6757131632?ppid=74f7b080-b982-4d13-a220-6b1a0b504b5a";
 
-export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScreenProps) {
+export default function ResultsScreen({
+  ratio,
+  archetype,
+  onRetake,
+  demo = false,
+  socialProofLine,
+}: ResultsScreenProps) {
   const confettiRef = useRef<ConfettiRef>(null);
   const shareCardRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>("gap");
@@ -211,14 +221,15 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
     window.open(LUMO_APP_STORE_URL, "_blank", "noopener,noreferrer");
   };
 
+  const resolvedSocialProofLine =
+    socialProofLine ?? buildSocialProofLine(getSocialProofPercentFromRatio(ratio), "women");
+
   const RatioNumber = ({ value }: { value: number }) => (
-    <div className="flex items-baseline gap-1 overflow-visible">
+    <div className="flex items-baseline gap-1.5 overflow-visible">
       <span
         className="inline-block text-[5.8rem] font-black leading-none tabular-nums"
         style={{
           letterSpacing: "-0.05em",
-          paddingRight: "0.12em",
-          paddingLeft: "0.04em",
           background: `linear-gradient(135deg, ${spectrumColor} 0%, #d4a843 100%)`,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
@@ -227,14 +238,17 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
       >
         {value}
       </span>
-      <span className="text-3xl font-black pb-3" style={{ color: "rgba(242,242,247,0.35)" }}>
+      <span
+        className="text-3xl font-black pb-3 shrink-0"
+        style={{ color: "rgba(242,242,247,0.35)" }}
+      >
         %
       </span>
     </div>
   );
 
   return (
-    <div className="min-h-dvh flex flex-col bg-void overflow-hidden relative">
+    <div className="min-h-dvh flex flex-col bg-void overflow-x-visible overflow-y-hidden relative">
       <Confetti
         ref={confettiRef}
         manualstart
@@ -275,7 +289,9 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
         {phase === "revealing" && (
           <motion.div
             key="revealing"
-            className="relative z-10 flex-1 flex flex-col items-center px-5 pt-10 pb-8 overflow-y-auto"
+            className={`relative z-10 flex-1 flex flex-col items-center px-5 pb-8 overflow-x-visible overflow-y-auto ${
+              demo ? "justify-center min-h-dvh py-8" : "pt-10"
+            }`}
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
           >
@@ -294,7 +310,12 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
               >
                 Your Halal Haram Ratio
               </motion.p>
-              <RatioNumber value={ratio} />
+              <div className="relative inline-flex items-center justify-center">
+                <RatioNumber value={ratio} />
+                {resolvedSocialProofLine && (
+                  <SocialProofBubble line={resolvedSocialProofLine} />
+                )}
+              </div>
             </motion.div>
 
             {/* Rest of content stagger-reveals */}
@@ -376,40 +397,49 @@ export default function ResultsScreen({ ratio, archetype, onRetake }: ResultsScr
                   <span>{sharing ? "Generating..." : "Share to Instagram"}</span>
                 </motion.button>
 
-                <motion.button
-                  onClick={handleOpenLumo}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ duration: 0.1 }}
-                  className="w-full py-4 rounded-full font-bold text-base cursor-pointer select-none flex items-center justify-center gap-2"
-                  style={{
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1.5px solid rgba(255,255,255,0.1)",
-                    color: "#f2f2f7",
-                  }}
-                >
-                  <span>✨</span>
-                  <span>Improve your ratio for free</span>
-                </motion.button>
+                {!demo && (
+                  <motion.button
+                    onClick={handleOpenLumo}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ duration: 0.1 }}
+                    className="w-full py-4 rounded-full font-bold text-base cursor-pointer select-none flex items-center justify-center gap-2"
+                    style={{
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1.5px solid rgba(255,255,255,0.1)",
+                      color: "#f2f2f7",
+                    }}
+                  >
+                    <span>✨</span>
+                    <span>Improve your ratio for free</span>
+                  </motion.button>
+                )}
               </motion.div>
 
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.85, duration: 0.4 }}
-                onClick={onRetake}
-                whileTap={{ scale: 0.96 }}
-                className="mt-2 py-3 px-8 rounded-2xl text-sm font-medium cursor-pointer select-none"
-                style={{ background: "transparent", color: "rgba(174,174,194,0.6)" }}
-              >
-                Retake the quiz 🔄
-              </motion.button>
+              {!demo && onRetake && (
+                <motion.button
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.85, duration: 0.4 }}
+                  onClick={onRetake}
+                  whileTap={{ scale: 0.96 }}
+                  className="mt-2 py-3 px-8 rounded-2xl text-sm font-medium cursor-pointer select-none"
+                  style={{ background: "transparent", color: "rgba(174,174,194,0.6)" }}
+                >
+                  Retake the quiz 🔄
+                </motion.button>
+              )}
 
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 0.4 }}
-                className="mt-4 text-xs font-medium"
-                style={{ color: "rgba(107,107,138,0.45)", letterSpacing: "0.05em" }}
+                className={
+                  demo ? "mt-6 text-sm font-semibold tracking-wide" : "mt-4 text-xs font-medium"
+                }
+                style={{
+                  color: demo ? "rgba(212,168,67,0.9)" : "rgba(107,107,138,0.45)",
+                  letterSpacing: demo ? "0.06em" : "0.05em",
+                }}
               >
                 halalharamratio.live
               </motion.p>
