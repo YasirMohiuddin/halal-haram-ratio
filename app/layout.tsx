@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import PostHogProvider from "@/components/PostHogProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className="min-h-full antialiased">
-        <PostHogProvider>{children}</PostHogProvider>
+        <TooltipProvider delay={0}>
+          <PostHogProvider>{children}</PostHogProvider>
+        </TooltipProvider>
         <Analytics />
       </body>
     </html>

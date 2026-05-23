@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Confetti, ConfettiRef } from "@/components/ui/confetti";
 import { Archetype } from "@/lib/quiz-data";
 import ShareCard from "@/components/ShareCard";
-import SocialProofBubble from "@/components/SocialProofBubble";
+import SocialProofTooltip from "@/components/SocialProofTooltip";
 import { buildSocialProofLine, getSocialProofPercentFromRatio } from "@/lib/social-proof";
 
 type Phase = "gap" | "counting" | "revealing";
@@ -320,10 +320,12 @@ export default function ResultsScreen({
                 Your Halal Haram Ratio
               </motion.p>
               <div className="relative inline-flex items-center justify-center">
-                <RatioNumber value={ratio} />
-                {resolvedSocialProofLine && (
-                  <SocialProofBubble line={resolvedSocialProofLine} />
-                )}
+                <SocialProofTooltip
+                  line={resolvedSocialProofLine}
+                  active={phase === "revealing"}
+                >
+                  <RatioNumber value={ratio} />
+                </SocialProofTooltip>
               </div>
             </motion.div>
 
