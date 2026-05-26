@@ -8,17 +8,23 @@ import LoadingScreen from "@/components/LoadingScreen";
 import ResultsScreen from "@/components/ResultsScreen";
 import MirrorScreen from "@/components/MirrorScreen";
 import {
-  QUESTIONS,
   PathKey,
   getPathKey,
   getQuestionOptions,
   calculateRatio,
   getArchetype,
-  getMirrorIndex,
+  getMirrorAfterQuestionId,
   getMirrorContent,
+  getQuizQuestion,
+  getUserGenderFromAnswer,
+  getSocialProofAudience,
+  buildQuestionFlow,
+  QUIZ_CONTENT_QUESTION_COUNT,
   Archetype,
   AnswerRecord,
+  UserGender,
 } from "@/lib/quiz-data";
+import { buildSocialProofLine, getSocialProofPercentFromRatio } from "@/lib/social-proof";
 
 type Screen = "hero" | "quiz" | "mirror" | "loading" | "results";
 
@@ -26,14 +32,31 @@ export default function Home() {
   const [screen, setScreen] = useState<Screen>("hero");
   const [questionIndex, setQuestionIndex] = useState(0);
   const [activePath, setActivePath] = useState<PathKey>("path1");
+  const [userGender, setUserGender] = useState<UserGender | null>(null);
   const [scores, setScores] = useState<number[]>([]);
   const [answers, setAnswers] = useState<AnswerRecord[]>([]);
   const [currentMirrorIndex, setCurrentMirrorIndex] = useState(0);
   const [pendingNextIndex, setPendingNextIndex] = useState(0);
   const [ratio, setRatio] = useState(0);
   const [archetype, setArchetype] = useState<Archetype | null>(null);
+  const [socialProofLine, setSocialProofLine] = useState<string | undefined>();
 
-  const currentQuestion = QUESTIONS[questionIndex];
+  const currentQuestion = getQuizQuestion(questionIndex, userGender, activePath);
+
+  const finishQuiz = useCallback(
+    (finalScores: number[], gender: UserGender) => {
+      const finalRatio = calculateRatio(finalScores);
+      const finalArchetype = getArchetype(finalRatio);
+      const audience = getSocialProofAudience(gender);
+      setRatio(finalRatio);
+      setArchetype(finalArchetype);
+      setSocialProofLine(
+        buildSocialProofLine(getSocialProofPercentFromRatio(finalRatio), audience)
+      );
+      setScreen("loading");
+    },
+    []
+  );
 
   const handleStart = useCallback(() => {
     setScreen("quiz");
@@ -41,23 +64,38 @@ export default function Home() {
     setScores([]);
     setAnswers([]);
     setActivePath("path1");
+    setUserGender(null);
+    setSocialProofLine(undefined);
   }, []);
 
   const handleAnswer = useCallback(
     (score: number, optionIndex: number) => {
+      const currentQ = getQuizQuestion(questionIndex, userGender, activePath);
+      if (!currentQ) return;
+
       if (questionIndex === 0) {
-        const opt = QUESTIONS[0].options[optionIndex];
+        const opt = getQuestionOptions(currentQ, activePath)[optionIndex];
         setAnswers((prev) => [
           ...prev,
           { questionId: 1, optionIndex, emoji: opt.emoji, text: opt.text, score: 0 },
         ]);
-        const path = getPathKey(optionIndex);
-        setActivePath(path);
+        setActivePath(getPathKey(optionIndex));
         setQuestionIndex(1);
         return;
       }
 
-      const currentQ = QUESTIONS[questionIndex];
+      if (questionIndex === 1) {
+        const opt = currentQ.options[optionIndex];
+        const gender = getUserGenderFromAnswer(optionIndex);
+        setUserGender(gender);
+        setAnswers((prev) => [
+          ...prev,
+          { questionId: 0, optionIndex, emoji: opt.emoji, text: opt.text, score: 0 },
+        ]);
+        setQuestionIndex(2);
+        return;
+      }
+
       const opts = getQuestionOptions(currentQ, activePath);
       const opt = opts[optionIndex];
       const newAnswers: AnswerRecord[] = [
@@ -69,8 +107,9 @@ export default function Home() {
       const newScores = [...scores, score];
       setScores(newScores);
 
+      const flowLength = buildQuestionFlow(userGender!, activePath).length;
       const nextIndex = questionIndex + 1;
-      const mirrorIdx = getMirrorIndex(questionIndex);
+      const mirrorIdx = getMirrorAfterQuestionId(currentQ.id);
 
       if (mirrorIdx !== -1) {
         setCurrentMirrorIndex(mirrorIdx);
@@ -79,31 +118,25 @@ export default function Home() {
         return;
       }
 
-      if (nextIndex >= QUESTIONS.length) {
-        const finalRatio = calculateRatio(newScores);
-        const finalArchetype = getArchetype(finalRatio);
-        setRatio(finalRatio);
-        setArchetype(finalArchetype);
-        setScreen("loading");
+      if (nextIndex >= flowLength + 2) {
+        finishQuiz(newScores, userGender!);
       } else {
         setQuestionIndex(nextIndex);
       }
     },
-    [questionIndex, scores, answers, activePath]
+    [questionIndex, scores, answers, activePath, userGender, finishQuiz]
   );
 
   const handleMirrorContinue = useCallback(() => {
-    if (pendingNextIndex >= QUESTIONS.length) {
-      const finalRatio = calculateRatio(scores);
-      const finalArchetype = getArchetype(finalRatio);
-      setRatio(finalRatio);
-      setArchetype(finalArchetype);
-      setScreen("loading");
+    const flowLength = userGender ? buildQuestionFlow(userGender, activePath).length : 0;
+
+    if (pendingNextIndex >= flowLength + 2) {
+      finishQuiz(scores, userGender!);
     } else {
       setQuestionIndex(pendingNextIndex);
       setScreen("quiz");
     }
-  }, [pendingNextIndex, scores]);
+  }, [pendingNextIndex, scores, userGender, activePath, finishQuiz]);
 
   const handleLoadingComplete = useCallback(() => {
     setScreen("results");
@@ -115,8 +148,10 @@ export default function Home() {
     setScores([]);
     setAnswers([]);
     setActivePath("path1");
+    setUserGender(null);
     setRatio(0);
     setArchetype(null);
+    setSocialProofLine(undefined);
   }, []);
 
   const mirrorContent =
@@ -153,7 +188,7 @@ export default function Home() {
               <QuestionScreen
                 question={currentQuestion}
                 questionIndex={questionIndex}
-                totalQuestions={QUESTIONS.length - 1}
+                totalQuestions={QUIZ_CONTENT_QUESTION_COUNT + 1}
                 activePath={activePath}
                 onAnswer={handleAnswer}
               />
@@ -204,6 +239,7 @@ export default function Home() {
                 ratio={ratio}
                 archetype={archetype}
                 onRetake={handleRetake}
+                socialProofLine={socialProofLine}
               />
             </motion.div>
           )}

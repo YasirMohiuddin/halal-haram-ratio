@@ -437,6 +437,116 @@ export const QUESTIONS: Question[] = [
   },
 ];
 
+export type UserGender = "male" | "female";
+
+export const GENDER_QUESTION: Question = {
+  id: 0,
+  questionText: "Before we start, who are you in this story?",
+  options: [
+    { emoji: "👨", text: "The brother holding the group chat together", score: 0 },
+    { emoji: "👩", text: "The sister who actually runs things", score: 0 },
+  ],
+};
+
+export const OOTD_QUESTION: Question = {
+  id: 16,
+  questionText: "What are you actually leaving the house in?",
+  pathQuestionText: {
+    path5: "What are you actually wearing?",
+  },
+  setupLines: {
+    path1: "Friday fit check. OOTD.",
+    path2: "Friday fit check. OOTD.",
+    path3: "Friday fit check. OOTD.",
+    path4: "Friday fit check. OOTD.",
+    path5: "Staying in. Mirror check.",
+  },
+  options: [
+    { emoji: "🧕", text: "Covered head to toe, that's just the default", score: 4 },
+    { emoji: "🧣", text: "Hijab on, everything else is up for debate", score: 3 },
+    { emoji: "👗", text: "Clean and modest, nothing that draws attention", score: 2 },
+    { emoji: "👚", text: "It's what it is, you wore what was comfortable", score: 1 },
+    { emoji: "💃", text: "The fit was giving. You weren't exactly hiding.", score: 0 },
+  ],
+  pathOptions: {
+    path5: [
+      { emoji: "🧕", text: "Covered head to toe, that's just the default", score: 4 },
+      { emoji: "🧣", text: "Hijab on, everything else is up for debate", score: 3 },
+      { emoji: "👗", text: "Clean and modest, nothing that draws attention", score: 2 },
+      { emoji: "👚", text: "It's what it is, comfort comes first", score: 1 },
+      { emoji: "💃", text: "The fit was giving. Even at home.", score: 0 },
+    ],
+  },
+};
+
+export const TEMPTATION_QUESTION: Question = {
+  id: 17,
+  questionText: "Be honest, what actually happens?",
+  setupLines: {
+    path1:
+      "It's past 1am. You're home. In bed. Phone in hand. It's late. You're alone. Porn's on the screen.",
+    path2: "It's past 1am. You're home. In bed. Phone in hand.",
+    path3:
+      "It was a good day. You're home now. In bed. Phone out. It's late. You're alone. Porn's on the screen.",
+    path4: "It's past 1am. You're home. In bed. Phone in hand.",
+    path5:
+      "It's a Friday night. You've been home all evening. Bored. Deep in a scroll. It's late. You're alone. Porn's on the screen.",
+  },
+  options: [
+    { emoji: "💀", text: "Full session. You know what you did.", score: 0 },
+    { emoji: "😬", text: "Started watching, stopped halfway, told yourself that counts", score: 1 },
+    {
+      emoji: "🔄",
+      text: "Opened it, closed it, opened it, closed it for real the second time",
+      score: 2,
+    },
+    { emoji: "🤲", text: "Felt the pull, made istighfar before it started", score: 3 },
+  ],
+};
+
+export function getUserGenderFromAnswer(optionIndex: number): UserGender {
+  return optionIndex === 0 ? "male" : "female";
+}
+
+export function getSocialProofAudience(userGender: UserGender): "men" | "women" {
+  return userGender === "male" ? "women" : "men";
+}
+
+export function buildQuestionFlow(gender: UserGender, path: PathKey): Question[] {
+  const contentQuestions = QUESTIONS.slice(1);
+
+  if (gender === "female") {
+    return [OOTD_QUESTION, ...contentQuestions];
+  }
+
+  if (path === "path5") {
+    return [
+      ...contentQuestions.slice(0, 3),
+      TEMPTATION_QUESTION,
+      ...contentQuestions.slice(3),
+    ];
+  }
+
+  return [
+    ...contentQuestions.slice(0, 5),
+    TEMPTATION_QUESTION,
+    ...contentQuestions.slice(5),
+  ];
+}
+
+export function getQuizQuestion(
+  questionIndex: number,
+  gender: UserGender | null,
+  path: PathKey
+): Question | null {
+  if (questionIndex === 0) return QUESTIONS[0];
+  if (questionIndex === 1) return GENDER_QUESTION;
+  if (!gender) return null;
+  return buildQuestionFlow(gender, path)[questionIndex - 2] ?? null;
+}
+
+export const QUIZ_CONTENT_QUESTION_COUNT = QUESTIONS.length - 1 + 1;
+
 export const ARCHETYPES: Archetype[] = [
   {
     name: "The Cultural Muslim",
@@ -584,7 +694,7 @@ export function getArchetype(ratio: number): Archetype {
 
 export function calculateRatio(scores: number[]): number {
   const total = scores.reduce((sum, s) => sum + s, 0);
-  const raw = (total / 60) * 100;
+  const raw = (total / 64) * 100;
   return Math.min(100, Math.round(raw));
 }
 
@@ -679,11 +789,11 @@ export interface MirrorContent {
   subtext: string;
 }
 
-/** After these questionIndex values (0-based), interrupt with a mirror screen */
-export const MIRROR_AFTER_INDICES = [2, 5, 8, 11];
+/** After answering these question ids, interrupt with a mirror screen */
+export const MIRROR_AFTER_QUESTION_IDS = [3, 6, 9, 12];
 
-export function getMirrorIndex(questionIndex: number): number {
-  return MIRROR_AFTER_INDICES.indexOf(questionIndex);
+export function getMirrorAfterQuestionId(questionId: number): number {
+  return MIRROR_AFTER_QUESTION_IDS.indexOf(questionId);
 }
 
 export function getMirrorContent(
